@@ -2,10 +2,15 @@ package com.sparta.scheduleJPA.service;
 
 import com.sparta.scheduleJPA.dto.SignUpRequestDto;
 import com.sparta.scheduleJPA.dto.SignUpResponseDto;
+import com.sparta.scheduleJPA.dto.UserResponseDto;
 import com.sparta.scheduleJPA.entity.User;
 import com.sparta.scheduleJPA.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,5 +21,17 @@ public class UserService {
         User user = new User(name, email, password);
         User savedUser = userRepository.save(user);
         return new SignUpResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getPassword());
+    }
+
+    public UserResponseDto findById(Long id){
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(optionalUser.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
+        }
+
+        User findUser = optionalUser.get();
+        return new UserResponseDto(findUser.getName(), findUser.getEmail());
+
     }
 }
