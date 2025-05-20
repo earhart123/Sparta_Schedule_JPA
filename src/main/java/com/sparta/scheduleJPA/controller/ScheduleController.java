@@ -17,7 +17,8 @@ public class ScheduleController {
      * 일정 정보 저장
      */
     @PostMapping("/create")
-    public String createSchedule(@RequestBody ScheduleRequestDto dto){
+    public String createSchedule(@RequestBody ScheduleRequestDto requestDto){
+
         return "success";
     }
 

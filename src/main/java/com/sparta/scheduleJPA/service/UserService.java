@@ -36,18 +36,18 @@ public class UserService {
 
     }
 
-    public UserResponseDto updateUserInfo(Long id, String name, String email, String oldPassword, String newPassword){
-        Optional<User> optionalUser = userRepository.findById(id);
-
-        if(optionalUser.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
-        }
-        User findUser = optionalUser.get();
-
-        if(!findUser.getPassword().equals(oldPassword)){
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
-        }
-
-
-    }
+//    public UserResponseDto updateUserInfo(Long id, String name, String email, String oldPassword, String newPassword){
+//        Optional<User> optionalUser = userRepository.findById(id);
+//
+//        if(optionalUser.isEmpty()){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
+//        }
+//        User findUser = optionalUser.get();
+//
+//        if(!findUser.getPassword().equals(oldPassword)){
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+//        }
+//
+//
+//    }
 }

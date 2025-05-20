@@ -1,10 +1,8 @@
 package com.sparta.scheduleJPA.controller;
 
-import com.sparta.scheduleJPA.dto.SignUpRequestDto;
-import com.sparta.scheduleJPA.dto.SignUpResponseDto;
-import com.sparta.scheduleJPA.dto.UpdateUserRequestDto;
-import com.sparta.scheduleJPA.dto.UserResponseDto;
+import com.sparta.scheduleJPA.dto.*;
 import com.sparta.scheduleJPA.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +32,13 @@ public class UserController {
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 
+//    @PostMapping("/login")
+//    public void logIn(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
+//        LoginResponseDto responseDto = userService.login(request.getUser);
+//
+//        Cookie cookie = new Cookie("")
+//    }
+
     /**
      * 유저 조회
      *
@@ -47,10 +52,10 @@ public class UserController {
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUserInfo(@PathVariable Long id,
-                                                          @RequestBody UpdateUserRequestDto requestDto){
-        UserResponseDto userResponseDto = userService.updateUserInfo(id, requestDto.getName(), requestDto.getEmail(), requestDto.getOldPassword(), requestDto.getNewPassword());
-
-    }
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<UserResponseDto> updateUserInfo(@PathVariable Long id,
+//                                                          @RequestBody UpdateUserRequestDto requestDto){
+//        UserResponseDto userResponseDto = userService.updateUserInfo(id, requestDto.getName(), requestDto.getEmail(), requestDto.getOldPassword(), requestDto.getNewPassword());
+//
+//    }
 }
