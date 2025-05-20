@@ -1,7 +1,9 @@
 package com.sparta.scheduleJPA.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "user")
 public class User extends BaseEntity{
@@ -20,4 +22,8 @@ public class User extends BaseEntity{
      * 기본생성자
      */
     public User() {}
+    public User(String email, String password){
+        this.email = email;
+        this.password = password;
+    }
 }
