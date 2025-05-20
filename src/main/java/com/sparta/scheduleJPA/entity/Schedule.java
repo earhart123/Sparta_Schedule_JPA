@@ -2,6 +2,7 @@ package com.sparta.scheduleJPA.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name="schedule")
@@ -12,9 +13,11 @@ public class Schedule extends BaseEntity {
     @Column(unique = true, nullable = false, name = "schedule_id")
     private Long id;
 
+    @Setter
     @Column(nullable = false, length = 30)
     private String title;
 
+    @Setter
     @Column(nullable = false, columnDefinition = "longtext", length = 1000)
     private String content;
 
@@ -26,4 +29,9 @@ public class Schedule extends BaseEntity {
      * 기본생성자
      */
     public Schedule(){}
+    public Schedule(String title, String content, User user){
+        this.title = title;
+        this.content = content;
+        this.user = user;
+    }
 }
