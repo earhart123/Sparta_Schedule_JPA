@@ -1,5 +1,6 @@
 package com.sparta.scheduleJPA.controller;
 
+import com.sparta.scheduleJPA.dto.ScheduleEditRequestDto;
 import com.sparta.scheduleJPA.dto.ScheduleRequestDto;
 import com.sparta.scheduleJPA.dto.ScheduleResponseDto;
 import com.sparta.scheduleJPA.entity.Schedule;
@@ -20,7 +21,9 @@ public class ScheduleController {
     }
 
     /**
-     * 일정 정보 저장
+     * 일정 저장
+     * @param requestDto
+     * @return ScheduleResponseDto
      */
     @PostMapping("/create")
     public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto){
@@ -31,6 +34,8 @@ public class ScheduleController {
 
     /**
      * 전체 일정 조회
+     * @return
+     * List<ScheduleResponseDto>
      */
     @GetMapping
     public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(){
@@ -40,10 +45,13 @@ public class ScheduleController {
 
     /**
      * 단건 일정 조회
+     * @param id
+     * @return ScheduleResponseDto
      */
     @GetMapping("/{id}")
-    public String getScheduleById() {
-        return "Success";
+    public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id) {
+        ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id);
+        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
     }
 
     /**
@@ -52,11 +60,30 @@ public class ScheduleController {
 
     /**
      * 일정 수정
+     * @param id
+     * @param requestDto
+     * @return ScheduleResponseDto
      */
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id,
+                                                            @RequestBody ScheduleRequestDto requestDto){
+        ScheduleResponseDto scheduleResponseDto = scheduleService.editSchedule(id, requestDto);
+        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
+    }
 
     /**
      * 일정 삭제
+     * @param id
+     * @return
      */
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id){
+        scheduleService.deleteSchedule(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
+
 
     /**
      * 로그인 기능
