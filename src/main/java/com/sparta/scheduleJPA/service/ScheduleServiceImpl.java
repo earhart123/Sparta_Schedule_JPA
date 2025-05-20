@@ -7,6 +7,9 @@ import com.sparta.scheduleJPA.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService{
@@ -17,5 +20,12 @@ public class ScheduleServiceImpl implements ScheduleService{
         Schedule schedule = new Schedule(dto.getTitle(), dto.getContent(), dto.getUser());
         Schedule savedSchedule = scheduleRepository.save(schedule);
         return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUser());
+    }
+
+    public List<ScheduleResponseDto> findAll(){
+        return scheduleRepository.findAll()
+                .stream()
+                .map(ScheduleResponseDto::toDto)
+                .toList();
     }
 }

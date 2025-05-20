@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/schedules")
 public class ScheduleController {
@@ -30,9 +32,10 @@ public class ScheduleController {
     /**
      * 전체 일정 조회
      */
-    @GetMapping("find-all")
-    public String getSchedule(){
-        return "success";
+    @GetMapping
+    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(){
+        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll();
+        return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
     }
 
     /**
