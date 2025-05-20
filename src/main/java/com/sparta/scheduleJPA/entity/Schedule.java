@@ -1,9 +1,11 @@
 package com.sparta.scheduleJPA.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
 @Table(name="schedule")
+@Getter
 public class Schedule extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

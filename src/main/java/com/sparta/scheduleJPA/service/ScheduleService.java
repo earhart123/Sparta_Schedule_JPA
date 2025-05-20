@@ -4,6 +4,6 @@ import com.sparta.scheduleJPA.dto.ScheduleRequestDto;
 import com.sparta.scheduleJPA.dto.ScheduleResponseDto;
 
 public interface ScheduleService {
-    ScheduleRequestDto createSchedule(ScheduleResponseDto dto);
+    public ScheduleResponseDto createSchedule(ScheduleRequestDto dto);
 
 }

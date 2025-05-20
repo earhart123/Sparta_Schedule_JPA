@@ -2,9 +2,7 @@ package com.sparta.scheduleJPA.controller;
 
 import com.sparta.scheduleJPA.dto.ScheduleRequestDto;
 import com.sparta.scheduleJPA.service.ScheduleService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/schedule")
@@ -18,17 +16,26 @@ public class ScheduleController {
     /**
      * 일정 정보 저장
      */
-    void createSchedule(@RequestBody ScheduleRequestDto dto){
+    @PostMapping("/create")
+    public String createSchedule(@RequestBody ScheduleRequestDto dto){
+        return "success";
+    }
 
+    /**
+     * 전체 일정 조회
+     */
+    @GetMapping("find-all")
+    public String getSchedule(){
+        return "success";
     }
 
     /**
      * 단건 일정 조회
      */
-
-    /**
-     * 전체 일정 조회
-     */
+    @GetMapping("/{id}")
+    public String getScheduleById() {
+        return "Success";
+    }
 
     /**
      * 작성자 또는 수정일 기준 일정 조회
