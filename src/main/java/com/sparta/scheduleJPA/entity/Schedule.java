@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name="schedule")
-public class Schedule {
+public class Schedule extends BaseEntity {
     @Id
     @Column(unique = true, nullable = true)
     private Long id;
@@ -19,12 +19,6 @@ public class Schedule {
 
     @Column(name = "content")
     private String content;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-
-    @Column(name = "modified_at")
-    private LocalDateTime modifiedAt;
 
     @Column(name = "user_id")
     private Long userId;
