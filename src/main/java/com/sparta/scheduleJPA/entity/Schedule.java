@@ -10,10 +10,10 @@ public class Schedule extends BaseEntity {
     @Column(unique = true, nullable = false, name = "schedule_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String title;
 
-    @Column(nullable = false, columnDefinition = "longtext")
+    @Column(nullable = false, columnDefinition = "longtext", length = 1000)
     private String content;
 
     @ManyToOne

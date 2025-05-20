@@ -10,9 +10,9 @@ public class User extends BaseEntity{
     @Column(unique = true, nullable = false, name = "user_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 16)
     private String password;
 }
