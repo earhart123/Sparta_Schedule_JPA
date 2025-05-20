@@ -19,4 +19,9 @@ public class Schedule extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    /**
+     * 기본생성자
+     */
+    public Schedule(){}
 }
