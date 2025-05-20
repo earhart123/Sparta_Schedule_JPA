@@ -48,17 +48,22 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
         Schedule findSchedule = optionalSchedule.get();
 
-        if(requestDto.getTitle()!=null){
-            findSchedule.setTitle(requestDto.getTitle());
-        }
-        if(requestDto.getContent()!=null){
-            findSchedule.setContent(requestDto.getContent());
-        }
+//        if(requestDto.getTitle()!=null){
+//            findSchedule.setTitle(requestDto.getTitle());
+//        }
+//        if(requestDto.getContent()!=null){
+//            findSchedule.setContent(requestDto.getContent());
+//        }
+
+        Optional.ofNullable(requestDto.getTitle())
+                .ifPresent(findSchedule::setTitle);
+
+        Optional.ofNullable(requestDto.getContent())
+                .ifPresent(findSchedule::setContent);
 
         scheduleRepository.save(findSchedule);
 
         return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser());
-
     }
 
     public void deleteSchedule(Long id){
