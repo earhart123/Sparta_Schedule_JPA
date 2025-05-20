@@ -12,6 +12,9 @@ public class User extends BaseEntity{
     @Column(unique = true, nullable = false, name = "user_id")
     private Long id;
 
+    @Column(nullable = false, length = 10)
+    private String name;
+
     @Column(nullable = false, length = 100)
     private String email;
 
@@ -22,7 +25,8 @@ public class User extends BaseEntity{
      * 기본생성자
      */
     public User() {}
-    public User(String email, String password){
+    public User(String name, String email, String password){
+        this.name = name;
         this.email = email;
         this.password = password;
     }

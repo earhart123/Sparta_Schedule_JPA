@@ -23,7 +23,7 @@ public class UserController {
      * 회원가입
      *
      * @param requestDto
-     * { email, password }
+     * { name, email, password }
      *
      * @return
      * ResponseEntity
@@ -32,7 +32,7 @@ public class UserController {
     public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto){
 
         SignUpResponseDto signUpResponseDto = userService.signUp(
-                requestDto.getEmail(), requestDto.getPassword());
+                requestDto.getName(), requestDto.getEmail(), requestDto.getPassword());
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 }

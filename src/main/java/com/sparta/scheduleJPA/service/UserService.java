@@ -12,9 +12,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public SignUpResponseDto signUp(String email, String password){
-        User user = new User(email, password);
+    public SignUpResponseDto signUp(String name, String email, String password){
+        User user = new User(name, email, password);
         User savedUser = userRepository.save(user);
-        return new SignUpResponseDto(savedUser.getId(), savedUser.getEmail(), savedUser.getPassword());
+        return new SignUpResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getPassword());
     }
 }
