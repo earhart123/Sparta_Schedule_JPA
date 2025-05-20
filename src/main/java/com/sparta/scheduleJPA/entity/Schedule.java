@@ -1,25 +1,22 @@
 package com.sparta.scheduleJPA.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name="schedule")
 public class Schedule extends BaseEntity {
     @Id
-    @Column(unique = true, nullable = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false, name = "schedule_id")
     private Long id;
 
-    @Column(name = "title")
+    @Column(nullable = false)
     private String title;
 
-    @Column(name = "content")
+    @Column(nullable = false, columnDefinition = "longtext")
     private String content;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
