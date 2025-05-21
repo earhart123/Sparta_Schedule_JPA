@@ -4,7 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
-@AllArgsConstructor
 public class LoginResponseDto {
     private final Long id;
+
+    public LoginResponseDto(Long id){
+        this.id = id;
+    }
 }

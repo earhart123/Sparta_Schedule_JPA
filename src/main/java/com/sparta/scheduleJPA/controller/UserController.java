@@ -2,7 +2,10 @@ package com.sparta.scheduleJPA.controller;
 
 import com.sparta.scheduleJPA.dto.*;
 import com.sparta.scheduleJPA.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +35,19 @@ public class UserController {
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 
-//    @PostMapping("/login")
-//    public void logIn(@RequestBody LoginRequestDto requestDto, HttpServletResponse response){
-//        LoginResponseDto responseDto = userService.login(request.getUser);
-//
-//        Cookie cookie = new Cookie("")
-//    }
+    @PostMapping("/login")
+    public UserResponseDto logIn(@Valid @ModelAttribute LoginRequestDto requestDto, HttpServletRequest request){
+        LoginResponseDto responseDto = userService.login(requestDto.getEmail(), requestDto.getPassword());
+
+        HttpSession session = request.getSession();
+
+        UserResponseDto loginUser = userService.findById(responseDto.getId());
+
+        // 세션에 로그인 회원 정보 저장
+        session.setAttribute("loginUser", loginUser);
+
+        return userService.findById(responseDto.getId());
+    }
 
     /**
      * 유저 조회

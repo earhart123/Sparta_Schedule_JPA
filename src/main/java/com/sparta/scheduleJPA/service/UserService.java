@@ -1,7 +1,6 @@
 package com.sparta.scheduleJPA.service;
 
-import ch.qos.logback.core.pattern.parser.OptionTokenizer;
-import com.sparta.scheduleJPA.dto.SignUpRequestDto;
+import com.sparta.scheduleJPA.dto.LoginResponseDto;
 import com.sparta.scheduleJPA.dto.SignUpResponseDto;
 import com.sparta.scheduleJPA.dto.UserResponseDto;
 import com.sparta.scheduleJPA.entity.User;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +22,24 @@ public class UserService {
         User user = new User(name, email, password);
         User savedUser = userRepository.save(user);
         return new SignUpResponseDto(savedUser.getId(), savedUser.getName(), savedUser.getEmail(), savedUser.getPassword());
+    }
+
+    public LoginResponseDto login(String email, String password){
+        Long findIndex = findIdByEmailAndPassword(email, password);
+        if(findIndex == null){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유효한 회원 정보가 존재하지 않습니다.");
+        }
+        return new LoginResponseDto(findIndex);
+
+    }
+
+    public Long findIdByEmailAndPassword(String email, String password){
+        List<User> userList = userRepository.findAll();
+        return userList.stream()
+                .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
+                .map(User::getId)
+                .findFirst()
+                .orElse(null);
     }
 
     public UserResponseDto findById(Long id){
