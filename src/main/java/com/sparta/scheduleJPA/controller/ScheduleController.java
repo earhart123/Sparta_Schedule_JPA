@@ -1,9 +1,7 @@
 package com.sparta.scheduleJPA.controller;
 
 import com.sparta.scheduleJPA.dto.*;
-import com.sparta.scheduleJPA.entity.Schedule;
 import com.sparta.scheduleJPA.service.ScheduleService;
-import com.sparta.scheduleJPA.service.ScheduleServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
@@ -27,15 +25,15 @@ public class ScheduleController {
      * @return ScheduleResponseDto
      */
     @PostMapping("/create")
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto, HttpServletRequest request){
+    public ResponseEntity<SaveScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto, HttpServletRequest request){
         HttpSession session = request.getSession();
 
        // Long userId = ((LoginResponseDto) session.getAttribute("userKey")).getId();
         Long userId = ((Long) session.getAttribute("userKey"));
 
-        ScheduleResponseDto scheduleResponseDto =
+        SaveScheduleResponseDto saveScheduleResponseDto =
                 scheduleService.saveSchedule(requestDto, userId);
-        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
+        return new ResponseEntity<>(saveScheduleResponseDto, HttpStatus.CREATED);
     }
 
     /**
