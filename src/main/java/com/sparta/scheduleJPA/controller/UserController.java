@@ -28,7 +28,7 @@ public class UserController {
      * ResponseEntity
      */
     @PostMapping("/signup")
-    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody SignUpRequestDto requestDto){
+    public ResponseEntity<SignUpResponseDto> signUp(@Valid @RequestBody SignUpRequestDto requestDto){
 
         SignUpResponseDto signUpResponseDto = userService.signUp(
                 requestDto.getName(), requestDto.getEmail(), requestDto.getPassword());
@@ -36,15 +36,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public UserResponseDto logIn(@Valid @ModelAttribute LoginRequestDto requestDto, HttpServletRequest request){
+    public UserResponseDto logIn(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
         LoginResponseDto responseDto = userService.login(requestDto.getEmail(), requestDto.getPassword());
+        Long userId = responseDto.getId();
+        UserResponseDto loginUser = userService.findById(responseDto.getId());
 
         HttpSession session = request.getSession();
 
-        UserResponseDto loginUser = userService.findById(responseDto.getId());
-
         // 세션에 로그인 회원 정보 저장
-        session.setAttribute("loginUser", loginUser);
+        //session.setAttribute("loginUser", loginUser);
+        session.setAttribute("userKey", userId);
 
         return userService.findById(responseDto.getId());
     }

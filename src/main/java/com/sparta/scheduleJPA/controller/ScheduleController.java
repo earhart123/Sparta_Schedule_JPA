@@ -1,11 +1,11 @@
 package com.sparta.scheduleJPA.controller;
 
-import com.sparta.scheduleJPA.dto.ScheduleEditRequestDto;
-import com.sparta.scheduleJPA.dto.ScheduleRequestDto;
-import com.sparta.scheduleJPA.dto.ScheduleResponseDto;
+import com.sparta.scheduleJPA.dto.*;
 import com.sparta.scheduleJPA.entity.Schedule;
 import com.sparta.scheduleJPA.service.ScheduleService;
 import com.sparta.scheduleJPA.service.ScheduleServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +23,18 @@ public class ScheduleController {
     /**
      * 일정 저장
      * @param requestDto
+     * { title, content, user }
      * @return ScheduleResponseDto
      */
     @PostMapping("/create")
-    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto){
+    public ResponseEntity<ScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto, HttpServletRequest request){
+        HttpSession session = request.getSession();
+
+       // Long userId = ((LoginResponseDto) session.getAttribute("userKey")).getId();
+        Long userId = ((Long) session.getAttribute("userKey"));
+
         ScheduleResponseDto scheduleResponseDto =
-                scheduleService.saveSchedule(requestDto);
+                scheduleService.saveSchedule(requestDto, userId);
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
     }
 

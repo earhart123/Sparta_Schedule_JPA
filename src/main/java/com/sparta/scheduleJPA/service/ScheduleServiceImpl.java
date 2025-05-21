@@ -2,8 +2,11 @@ package com.sparta.scheduleJPA.service;
 
 import com.sparta.scheduleJPA.dto.ScheduleRequestDto;
 import com.sparta.scheduleJPA.dto.ScheduleResponseDto;
+import com.sparta.scheduleJPA.dto.UserResponseDto;
 import com.sparta.scheduleJPA.entity.Schedule;
+import com.sparta.scheduleJPA.entity.User;
 import com.sparta.scheduleJPA.repository.ScheduleRepository;
+import com.sparta.scheduleJPA.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,10 +19,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ScheduleServiceImpl implements ScheduleService{
     private final ScheduleRepository scheduleRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public ScheduleResponseDto saveSchedule(ScheduleRequestDto dto) {
-        Schedule schedule = new Schedule(dto.getTitle(), dto.getContent(), dto.getUser());
+    public ScheduleResponseDto saveSchedule(ScheduleRequestDto dto, Long userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        User findUser = optionalUser.get();
+
+        Schedule schedule = new Schedule(dto.getTitle(), dto.getContent(), findUser);
         Schedule savedSchedule = scheduleRepository.save(schedule);
         return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUser());
     }

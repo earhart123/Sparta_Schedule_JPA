@@ -9,7 +9,7 @@ import org.springframework.util.PatternMatchUtils;
 import java.io.IOException;
 
 public class LoginFilter implements Filter {
-    private static final String[] WHITE_LIST = {"/", "/signup", "/login"};
+    private static final String[] WHITE_LIST = {"/", "/users/signup", "/users/login"};
 
 
     @Override
@@ -23,7 +23,7 @@ public class LoginFilter implements Filter {
         if(!isWhiteList(requestURI)){
             HttpSession session = httpRequest.getSession(false);
 
-            if(session==null || session.getAttribute("sessionKey") == null){
+            if(session==null || session.getAttribute("userKey") == null){
                 throw new RuntimeException("로그인 해주세요.");
             }
         }
