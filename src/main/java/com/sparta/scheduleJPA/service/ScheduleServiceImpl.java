@@ -30,23 +30,31 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         Schedule schedule = new Schedule(dto.getTitle(), dto.getContent(), findUser);
         Schedule savedSchedule = scheduleRepository.save(schedule);
-        return new SaveScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUser().getId(), schedule.getUser().getName());
+        return new SaveScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(),
+                savedSchedule.getUser().getId(), schedule.getUser().getName());
     }
 
     public List<ScheduleResponseDto> findAll(Long userId){
         return scheduleRepository.findUserScheduleAll();
     }
 
-//    public ScheduleResponseDto findById(Long id){
-//        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
-//
-//        if(optionalSchedule.isEmpty()){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
-//        }
-//        Schedule findSchedule = optionalSchedule.get();
-//
-//        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser());
-//    }
+    public ScheduleResponseDto findById(Long id, Long userId){
+        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
+
+        if(optionalSchedule.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
+        }
+        Schedule findSchedule = optionalSchedule.get();
+
+        // 현재 로그인한 유저가 등록한 일정을 수정하는지 확인
+        if(Objects.equals(findSchedule.getUser().getId(), userId)){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 정보가 잘못되었습니다.");
+        }
+
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(),
+                findSchedule.getCreatedAt(), findSchedule.getModifiedAt(),
+                findSchedule.getUser().getId(), findSchedule.getUser().getName());
+    }
 
     public ScheduleResponseDto editSchedule(Long id, ScheduleRequestDto requestDto, Long userId){
         Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
@@ -77,7 +85,9 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         scheduleRepository.save(findSchedule);
 
-        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser().getId(), findSchedule.getUser().getName());
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(),
+                findSchedule.getCreatedAt(), findSchedule.getModifiedAt(),
+                findSchedule.getUser().getId(), findSchedule.getUser().getName());
     }
 
     public void deleteSchedule(Long id){

@@ -64,13 +64,15 @@ public class ScheduleController {
      * 단건 일정 조회
      * @param id
      * @return
-     * { ScheduleResponseDto}
+     * { ScheduleResponseDto }
      */
-//    @GetMapping("/{id}")
-//    public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id) {
-//        ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id);
-//        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id, HttpSession session) {
+        Long userId = ((Long) session.getAttribute("userKey"));
+
+        ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id, userId);
+        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
+    }
 
     /**
      * 작성자 또는 수정일 기준 일정 조회

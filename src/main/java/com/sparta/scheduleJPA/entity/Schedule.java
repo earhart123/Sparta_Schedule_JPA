@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name="schedule")
 @Getter
@@ -20,6 +22,12 @@ public class Schedule extends BaseEntity {
     @Setter
     @Column(nullable = false, columnDefinition = "longtext", length = 1000)
     private String content;
+
+    @Column(nullable = false, name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false, name = "modified_at")
+    private LocalDateTime modifiedAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
