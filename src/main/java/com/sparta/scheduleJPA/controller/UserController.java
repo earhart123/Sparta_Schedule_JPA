@@ -35,16 +35,36 @@ public class UserController {
         return new ResponseEntity<>(signUpResponseDto, HttpStatus.CREATED);
     }
 
+    /**
+     *
+     * @param requestDto
+     * { email, password }
+     * @param session
+     * @return
+     * UserResponseDto
+     */
+//    @PostMapping("/login")
+//    public UserResponseDto logIn(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
+//        LoginResponseDto responseDto = userService.login(requestDto.getEmail(), requestDto.getPassword());
+//        Long userId = responseDto.getId();
+//        UserResponseDto loginUser = userService.findById(responseDto.getId());
+//
+//        HttpSession session = request.getSession();
+//
+//        // 세션에 로그인 회원 정보 저장
+//        //session.setAttribute("loginUser", loginUser);
+//        session.setAttribute("userKey", userId);
+//
+//        return userService.findById(responseDto.getId());
+//    }
+
     @PostMapping("/login")
-    public UserResponseDto logIn(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
+    public UserResponseDto logIn(@Valid @RequestBody LoginRequestDto requestDto, HttpSession session){
+
         LoginResponseDto responseDto = userService.login(requestDto.getEmail(), requestDto.getPassword());
         Long userId = responseDto.getId();
-        UserResponseDto loginUser = userService.findById(responseDto.getId());
 
-        HttpSession session = request.getSession();
-
-        // 세션에 로그인 회원 정보 저장
-        //session.setAttribute("loginUser", loginUser);
+        // 세션에 로그인한 유저 id 저장
         session.setAttribute("userKey", userId);
 
         return userService.findById(responseDto.getId());

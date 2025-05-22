@@ -24,15 +24,26 @@ public class ScheduleController {
      * { title, content, user }
      * @return ScheduleResponseDto
      */
-    @PostMapping("/create")
-    public ResponseEntity<SaveScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto, HttpServletRequest request){
-        HttpSession session = request.getSession();
+//    @PostMapping("/create")
+//    public ResponseEntity<SaveScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto, HttpServletRequest request){
+//        HttpSession session = request.getSession();
+//
+//       // Long userId = ((LoginResponseDto) session.getAttribute("userKey")).getId();
+//        Long userId = ((Long) session.getAttribute("userKey"));
+//
+//        SaveScheduleResponseDto saveScheduleResponseDto =
+//                scheduleService.saveSchedule(requestDto, userId);
+//        return new ResponseEntity<>(saveScheduleResponseDto, HttpStatus.CREATED);
+//    }
 
-       // Long userId = ((LoginResponseDto) session.getAttribute("userKey")).getId();
+    @PostMapping("/create")
+    public ResponseEntity<SaveScheduleResponseDto> createSchedule(@RequestBody ScheduleRequestDto requestDto, HttpSession session){
+
         Long userId = ((Long) session.getAttribute("userKey"));
 
         SaveScheduleResponseDto saveScheduleResponseDto =
                 scheduleService.saveSchedule(requestDto, userId);
+
         return new ResponseEntity<>(saveScheduleResponseDto, HttpStatus.CREATED);
     }
 
