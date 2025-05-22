@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -71,7 +73,7 @@ public class UserController {
     }
 
     /**
-     * 유저 조회
+     * id로 유저 조회
      *
      * @param id
      * @return
@@ -82,6 +84,21 @@ public class UserController {
         UserResponseDto userResponseDto = userService.findById(id);
         return new ResponseEntity<>(userResponseDto, HttpStatus.OK);
     }
+
+    /**
+     * name으로 유저 리스트 조회
+     *
+     * @param name
+     * @return
+     * List<UserResponseDto>
+     */
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<UserResponseDto>> findById(@PathVariable String name){
+        List<UserResponseDto> userResponseDtoList = userService.findByName(name);
+        return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
+    }
+
+
 
 //    @PatchMapping("/{id}")
 //    public ResponseEntity<UserResponseDto> updateUserInfo(@PathVariable Long id,

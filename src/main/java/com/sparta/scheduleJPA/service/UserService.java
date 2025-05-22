@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +41,14 @@ public class UserService {
                 .map(User::getId)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public List<UserResponseDto> findByName(String name){
+        List<User> userList = userRepository.findAll();
+        return userList.stream()
+                .filter(user -> user.getEmail().equals(name))
+                .map(user -> new UserResponseDto(user.getName(), user.getEmail()))
+                .collect(Collectors.toList());
     }
 
     public UserResponseDto findById(Long id){
