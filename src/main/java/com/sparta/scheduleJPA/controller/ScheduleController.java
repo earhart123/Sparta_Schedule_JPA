@@ -82,12 +82,15 @@ public class ScheduleController {
      * @param requestDto
      * @return ScheduleResponseDto
      */
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id,
-//                                                            @RequestBody ScheduleRequestDto requestDto){
-//        ScheduleResponseDto scheduleResponseDto = scheduleService.editSchedule(id, requestDto);
-//        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
-//    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id,
+                                                            @RequestBody ScheduleRequestDto requestDto,
+                                                            HttpSession session){
+        Long userId = ((Long) session.getAttribute("userKey"));
+
+        ScheduleResponseDto scheduleResponseDto = scheduleService.editSchedule(id, requestDto, userId);
+        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
+    }
 
     /**
      * 일정 삭제
@@ -95,19 +98,12 @@ public class ScheduleController {
      * @return
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id){
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, HttpSession session){
+        //Long userId = ((Long) session.getAttribute("userKey"));
         scheduleService.deleteSchedule(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-
-
-    /**
-     * 로그인 기능
-     * cookie로 로그인 유지
-     * 입력 : 아이디, 비밀번호
-     */
 
 
 }
