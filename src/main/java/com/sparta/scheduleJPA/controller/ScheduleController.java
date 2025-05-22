@@ -53,21 +53,24 @@ public class ScheduleController {
      * List<ScheduleResponseDto>
      */
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(){
-        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll();
+    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule(HttpSession session){
+        Long userId = ((Long) session.getAttribute("userKey"));
+
+        List<ScheduleResponseDto> scheduleResponseDtoList = scheduleService.findAll(userId);
         return new ResponseEntity<>(scheduleResponseDtoList, HttpStatus.OK);
     }
 
     /**
      * 단건 일정 조회
      * @param id
-     * @return ScheduleResponseDto
+     * @return
+     * { ScheduleResponseDto}
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id) {
-        ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id);
-        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<ScheduleResponseDto> findById(@PathVariable Long id) {
+//        ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id);
+//        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
+//    }
 
     /**
      * 작성자 또는 수정일 기준 일정 조회
@@ -79,12 +82,12 @@ public class ScheduleController {
      * @param requestDto
      * @return ScheduleResponseDto
      */
-    @PatchMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id,
-                                                            @RequestBody ScheduleRequestDto requestDto){
-        ScheduleResponseDto scheduleResponseDto = scheduleService.editSchedule(id, requestDto);
-        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
-    }
+//    @PatchMapping("/{id}")
+//    public ResponseEntity<ScheduleResponseDto> editSchedule(@PathVariable Long id,
+//                                                            @RequestBody ScheduleRequestDto requestDto){
+//        ScheduleResponseDto scheduleResponseDto = scheduleService.editSchedule(id, requestDto);
+//        return new ResponseEntity<>(scheduleResponseDto, HttpStatus.OK);
+//    }
 
     /**
      * 일정 삭제

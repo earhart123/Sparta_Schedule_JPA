@@ -10,15 +10,18 @@ public class ScheduleResponseDto {
     private Long id;
     private String title;
     private String content;
-    private User user;
+    private Long userId;
+    private String userName;
 
-    public ScheduleResponseDto(Long id, String title, String content, User user){
+    public ScheduleResponseDto(Long id, String title, String content, Long userId, String userName) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.user = user;
+        this.userId = userId;
+        this.userName = userName;
     }
-    public static ScheduleResponseDto toDto(Schedule schedule){
-        return new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContent(), schedule.getUser());
+
+    public static ScheduleResponseDto toDto(Schedule schedule, Long userId, String userName){
+        return new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContent(), userId, userName);
     }
 }

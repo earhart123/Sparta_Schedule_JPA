@@ -31,47 +31,51 @@ public class ScheduleServiceImpl implements ScheduleService{
         return new SaveScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContent(), savedSchedule.getUser().getId(), schedule.getUser().getName());
     }
 
-    public List<ScheduleResponseDto> findAll(){
-        return scheduleRepository.findAll()
-                .stream()
-                .map(ScheduleResponseDto::toDto)
-                .toList();
+    public List<ScheduleResponseDto> findAll(Long userId){
+
+        return scheduleRepository.findUserScheduleAll();
+
+
+//        return scheduleRepository.findAll()
+//                .stream()
+//                .map(ScheduleResponseDto::toDto)
+//                .toList();
     }
 
-    public ScheduleResponseDto findById(Long id){
-        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
-        if(optionalSchedule.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
-        }
-        Schedule findSchedule = optionalSchedule.get();
-
-        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser());
-    }
-
-    public ScheduleResponseDto editSchedule(Long id, ScheduleRequestDto requestDto){
-        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
-        if(optionalSchedule.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
-        }
-        Schedule findSchedule = optionalSchedule.get();
-
-//        if(requestDto.getTitle()!=null){
-//            findSchedule.setTitle(requestDto.getTitle());
+//    public ScheduleResponseDto findById(Long id){
+//        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
+//        if(optionalSchedule.isEmpty()){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
 //        }
-//        if(requestDto.getContent()!=null){
-//            findSchedule.setContent(requestDto.getContent());
+//        Schedule findSchedule = optionalSchedule.get();
+//
+//        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser());
+//    }
+
+//    public ScheduleResponseDto editSchedule(Long id, ScheduleRequestDto requestDto){
+//        Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
+//        if(optionalSchedule.isEmpty()){
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
 //        }
-
-        Optional.ofNullable(requestDto.getTitle())
-                .ifPresent(findSchedule::setTitle);
-
-        Optional.ofNullable(requestDto.getContent())
-                .ifPresent(findSchedule::setContent);
-
-        scheduleRepository.save(findSchedule);
-
-        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser());
-    }
+//        Schedule findSchedule = optionalSchedule.get();
+//
+////        if(requestDto.getTitle()!=null){
+////            findSchedule.setTitle(requestDto.getTitle());
+////        }
+////        if(requestDto.getContent()!=null){
+////            findSchedule.setContent(requestDto.getContent());
+////        }
+//
+//        Optional.ofNullable(requestDto.getTitle())
+//                .ifPresent(findSchedule::setTitle);
+//
+//        Optional.ofNullable(requestDto.getContent())
+//                .ifPresent(findSchedule::setContent);
+//
+//        scheduleRepository.save(findSchedule);
+//
+//        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContent(), findSchedule.getUser());
+//    }
 
     public void deleteSchedule(Long id){
         Optional<Schedule> optionalSchedule = scheduleRepository.findById(id);
