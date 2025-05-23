@@ -116,4 +116,22 @@ public class UserController {
 
         return new ResponseEntity<>(updateUserResponseDto, HttpStatus.OK);
     }
+
+    /**
+     * 유저 삭제
+     *
+     * @param requestDto
+     * { password }
+     * @param { 로그인 session }
+     * @return
+     */
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deleteUser(@RequestBody UserRequestDto requestDto, HttpSession session){
+
+        Long userId = ((Long) session.getAttribute("userKey"));
+
+        userService.deleteUser(userId, requestDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

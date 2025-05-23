@@ -87,4 +87,20 @@ public class UserService {
         return new UpdateUserResponseDto(findUser);
 
     }
+
+    public void deleteUser(Long id, UserRequestDto requestDto){
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(optionalUser.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
+        }
+        User findUser = optionalUser.get();
+
+        // 로그인한 유저의 비밀번호와 입력한 비밀번호가 일치하는지 확인
+        if(!findUser.getPassword().equals(requestDto.getPassword())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+        }
+
+        userRepository.deleteById(id);
+    }
 }
