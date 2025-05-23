@@ -99,7 +99,14 @@ public class UserController {
     }
 
 
-
+    /**
+     * 유저 정보 수정
+     *
+     * @param requestDto
+     * { name, email, oldPassword, newPassword }
+     * @param { 로그인 session }
+     * @return { UpdateUserResponseDto }
+     */
     @PatchMapping("/edit")
     public ResponseEntity<UpdateUserResponseDto> updateUserInfo(@RequestBody UpdateUserRequestDto requestDto,
                                                           HttpSession session){
