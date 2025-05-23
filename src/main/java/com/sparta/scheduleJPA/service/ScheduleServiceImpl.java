@@ -77,9 +77,9 @@ public class ScheduleServiceImpl implements ScheduleService{
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 정보가 잘못되었습니다.");
         }
 
+        // 일정 제목, 내용이 null이 아니면 일정 수정
         Optional.ofNullable(requestDto.getTitle())
                 .ifPresent(findSchedule::setTitle);
-
         Optional.ofNullable(requestDto.getContent())
                 .ifPresent(findSchedule::setContent);
 

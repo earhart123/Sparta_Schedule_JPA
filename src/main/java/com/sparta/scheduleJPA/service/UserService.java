@@ -1,8 +1,6 @@
 package com.sparta.scheduleJPA.service;
 
-import com.sparta.scheduleJPA.dto.LoginResponseDto;
-import com.sparta.scheduleJPA.dto.SignUpResponseDto;
-import com.sparta.scheduleJPA.dto.UserResponseDto;
+import com.sparta.scheduleJPA.dto.*;
 import com.sparta.scheduleJPA.entity.User;
 import com.sparta.scheduleJPA.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -63,18 +61,30 @@ public class UserService {
 
     }
 
-//    public UserResponseDto updateUserInfo(Long id, String name, String email, String oldPassword, String newPassword){
-//        Optional<User> optionalUser = userRepository.findById(id);
-//
-//        if(optionalUser.isEmpty()){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
-//        }
-//        User findUser = optionalUser.get();
-//
-//        if(!findUser.getPassword().equals(oldPassword)){
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
-//        }
-//
-//
-//    }
+    public UpdateUserResponseDto updateUserInfo(Long id, UpdateUserRequestDto requestDto){
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if(optionalUser.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id =" + id);
+        }
+        User findUser = optionalUser.get();
+
+        // 로그인한 유저의 비밀번호와 입력한 비밀번호가 일치하는지 확인
+        if(!findUser.getPassword().equals(requestDto.getOldPassword())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+        }
+
+        // 이름, 이메일, 비밀번호가 null이 아니면 정보 수정
+        Optional.ofNullable(requestDto.getName())
+                .ifPresent(findUser::setName);
+        Optional.ofNullable(requestDto.getEmail())
+                .ifPresent(findUser::setEmail);
+        Optional.ofNullable(requestDto.getNewPassword())
+                .ifPresent(findUser::setPassword);
+
+        userRepository.save(findUser);
+
+        return new UpdateUserResponseDto(findUser);
+
+    }
 }

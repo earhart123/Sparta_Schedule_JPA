@@ -100,10 +100,13 @@ public class UserController {
 
 
 
-//    @PatchMapping("/{id}")
-//    public ResponseEntity<UserResponseDto> updateUserInfo(@PathVariable Long id,
-//                                                          @RequestBody UpdateUserRequestDto requestDto){
-//        UserResponseDto userResponseDto = userService.updateUserInfo(id, requestDto.getName(), requestDto.getEmail(), requestDto.getOldPassword(), requestDto.getNewPassword());
-//
-//    }
+    @PatchMapping("/edit")
+    public ResponseEntity<UpdateUserResponseDto> updateUserInfo(@RequestBody UpdateUserRequestDto requestDto,
+                                                          HttpSession session){
+        Long userId = ((Long) session.getAttribute("userKey"));
+
+        UpdateUserResponseDto updateUserResponseDto = userService.updateUserInfo(userId, requestDto);
+
+        return new ResponseEntity<>(updateUserResponseDto, HttpStatus.OK);
+    }
 }

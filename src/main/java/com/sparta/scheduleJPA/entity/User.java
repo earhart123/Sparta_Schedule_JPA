@@ -3,6 +3,7 @@ package com.sparta.scheduleJPA.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Entity
@@ -13,13 +14,16 @@ public class User extends BaseEntity{
     @Column(unique = true, nullable = false, name = "user_id")
     private Long id;
 
+    @Setter
     @Column(nullable = false, length = 10)
     private String name;
 
     @Email
+    @Setter
     @Column(nullable = false, length = 100)
     private String email;
 
+    @Setter
     @Column(nullable = false, length = 16)
     private String password;
 
