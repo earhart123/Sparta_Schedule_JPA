@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
 
-    @Query("SELECT new com.sparta.scheduleJPA.dto.ScheduleResponseDto(s.id, s.title, s.content, u.id, u.name) " +
+    @Query("SELECT new com.sparta.scheduleJPA.dto.ScheduleResponseDto(s.id, s.title, s.content, s.createdAt, s.modifiedAt, u.id, u.name) " +
             "FROM Schedule s JOIN s.user u")
     List<ScheduleResponseDto> findUserScheduleAll();
 }

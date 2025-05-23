@@ -7,7 +7,6 @@ import com.sparta.scheduleJPA.entity.Schedule;
 import com.sparta.scheduleJPA.entity.User;
 import com.sparta.scheduleJPA.repository.ScheduleRepository;
 import com.sparta.scheduleJPA.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -64,13 +63,6 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
 
         Schedule findSchedule = optionalSchedule.get();
-
-//        if(requestDto.getTitle()!=null){
-//            findSchedule.setTitle(requestDto.getTitle());
-//        }
-//        if(requestDto.getContent()!=null){
-//            findSchedule.setContent(requestDto.getContent());
-//        }
 
         // 현재 로그인한 유저가 등록한 일정을 수정하는지 확인
         if(Objects.equals(findSchedule.getUser().getId(), userId)){

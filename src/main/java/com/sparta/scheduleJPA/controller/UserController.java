@@ -2,8 +2,6 @@ package com.sparta.scheduleJPA.controller;
 
 import com.sparta.scheduleJPA.dto.*;
 import com.sparta.scheduleJPA.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -39,28 +37,14 @@ public class UserController {
 
     /**
      * 로그인
-     * 
+     *
      * @param requestDto
      * { email, password }
      * @param session
+     * { userId }
      * @return
      * UserResponseDto
      */
-//    @PostMapping("/login")
-//    public UserResponseDto logIn(@Valid @RequestBody LoginRequestDto requestDto, HttpServletRequest request){
-//        LoginResponseDto responseDto = userService.login(requestDto.getEmail(), requestDto.getPassword());
-//        Long userId = responseDto.getId();
-//        UserResponseDto loginUser = userService.findById(responseDto.getId());
-//
-//        HttpSession session = request.getSession();
-//
-//        // 세션에 로그인 회원 정보 저장
-//        //session.setAttribute("loginUser", loginUser);
-//        session.setAttribute("userKey", userId);
-//
-//        return userService.findById(responseDto.getId());
-//    }
-
     @PostMapping("/login")
     public UserResponseDto logIn(@Valid @RequestBody LoginRequestDto requestDto, HttpSession session){
 
@@ -76,7 +60,7 @@ public class UserController {
     /**
      * id로 유저 조회
      *
-     * @param id
+     * @param { userId }
      * @return
      * ResponseEntity
      */

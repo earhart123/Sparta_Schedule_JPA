@@ -1,6 +1,5 @@
 package com.sparta.scheduleJPA.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter

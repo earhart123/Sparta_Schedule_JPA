@@ -7,5 +7,5 @@ import lombok.Getter;
 public class ScheduleRequestDto {
     private String title;
     private String content;
-    private Long user_id;
+    // private Long user_id;
 }
