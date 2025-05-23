@@ -26,7 +26,7 @@ public class UserService {
     public LoginResponseDto login(String email, String password){
         Long findIndex = findIdByEmailAndPassword(email, password);
         if(findIndex == null){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "유효한 회원 정보가 존재하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "유효한 회원 정보가 존재하지 않습니다.");
         }
         return new LoginResponseDto(findIndex);
 

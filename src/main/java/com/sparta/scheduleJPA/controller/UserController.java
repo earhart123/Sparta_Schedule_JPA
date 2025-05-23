@@ -38,7 +38,8 @@ public class UserController {
     }
 
     /**
-     *
+     * 로그인
+     * 
      * @param requestDto
      * { email, password }
      * @param session

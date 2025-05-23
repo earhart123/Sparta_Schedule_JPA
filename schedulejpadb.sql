@@ -15,5 +15,6 @@ CREATE TABLE user (
     email VARCHAR(100) NOT NULL,
     password VARCHAR(16) NOT NULL,
     created_at DATETIME NOT NULL,
-    modified_at DATETIME NOT NULL
+    modified_at DATETIME NOT NULL,
+    UNIQUE KEY (email)
 );
