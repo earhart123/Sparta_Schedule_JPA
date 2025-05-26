@@ -62,10 +62,6 @@ public class ScheduleController {
     }
 
     /**
-     * 작성자 또는 수정일 기준 일정 조회
-     */
-
-    /**
      * 일정 수정
      * @param { scheduleId }
      * @param requestDto

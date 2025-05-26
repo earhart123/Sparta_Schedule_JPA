@@ -44,7 +44,7 @@ public class UserService {
     public List<UserResponseDto> findByName(String name){
         List<User> userList = userRepository.findAll();
         return userList.stream()
-                .filter(user -> user.getEmail().equals(name))
+                .filter(user -> user.getName().equals(name))
                 .map(user -> new UserResponseDto(user.getName(), user.getEmail()))
                 .collect(Collectors.toList());
     }

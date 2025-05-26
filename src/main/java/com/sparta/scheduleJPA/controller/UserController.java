@@ -77,8 +77,8 @@ public class UserController {
      * @return
      * List<UserResponseDto>
      */
-    @GetMapping("/search/{name}")
-    public ResponseEntity<List<UserResponseDto>> findById(@PathVariable String name){
+    @GetMapping("/search")
+    public ResponseEntity<List<UserResponseDto>> findById(@RequestParam String name){
         List<UserResponseDto> userResponseDtoList = userService.findByName(name);
         return new ResponseEntity<>(userResponseDtoList, HttpStatus.OK);
     }

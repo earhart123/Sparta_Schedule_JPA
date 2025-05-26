@@ -25,7 +25,7 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public SaveScheduleResponseDto saveSchedule(ScheduleRequestDto dto, Long userId) {
         Optional<User> optionalUser = userRepository.findById(userId);
-        User findUser = optionalUser.get();
+        User findUser = optionalUser.get(); // 세션에서 받아온 유저 id를 사용하기 때문에 null 체크 제외함
 
         Schedule schedule = new Schedule(dto.getTitle(), dto.getContent(), findUser);
         Schedule savedSchedule = scheduleRepository.save(schedule);
@@ -45,8 +45,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         }
         Schedule findSchedule = optionalSchedule.get();
 
-        // 현재 로그인한 유저가 등록한 일정을 수정하는지 확인
-        if(Objects.equals(findSchedule.getUser().getId(), userId)){
+        if(!Objects.equals(findSchedule.getUser().getId(), userId)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 정보가 잘못되었습니다.");
         }
 
@@ -65,7 +64,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         Schedule findSchedule = optionalSchedule.get();
 
         // 현재 로그인한 유저가 등록한 일정을 수정하는지 확인
-        if(Objects.equals(findSchedule.getUser().getId(), userId)){
+        if(!Objects.equals(findSchedule.getUser().getId(), userId)){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 정보가 잘못되었습니다.");
         }
 
